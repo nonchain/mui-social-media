@@ -1,12 +1,24 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
+import React from 'react'
+
+import Sidebar from './components/Sidebar'
+import Feed from './components/Feed'
+import Discover from './components/Discover'
+import { Box, Stack } from '@mui/material'
+
 import './App.css'
+import Navbar from './components/Navbar'
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <div>MUI</div>
+    <React.Fragment>
+      <Navbar />
+
+      <Stack direction="row">
+        <Sidebar />
+        <Feed />
+        <Discover />
+      </Stack>
+    </React.Fragment>
   )
 }
 
