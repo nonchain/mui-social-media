@@ -1,4 +1,12 @@
-import React from 'react'
+import React from 'react';
+import {
+  ThemeProvider,
+  createTheme,
+  responsiveFontSizes,
+} from '@mui/material/styles';
+import { deepmerge } from '@mui/utils';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { getDesignTokens } from './theme/theme';
 
 import Sidebar from './components/Sidebar'
 import Feed from './components/Feed'
@@ -9,16 +17,28 @@ import './App.css'
 import Navbar from './components/Navbar'
 
 function App() {
-  return (
-    <React.Fragment>
-      <Navbar />
+  const [mode, setMode] = React.useState("light");
 
-      <Stack direction="row">
-        <Sidebar />
-        <Feed />
-        <Discover />
-      </Stack>
-    </React.Fragment>
+  let theme = React.useMemo(
+    () =>
+      createTheme(deepmerge(getDesignTokens(mode)),
+    [mode]
+  ));
+
+  theme = responsiveFontSizes(theme);
+
+  return (
+    <ThemeProvider theme={theme}>
+      <React.Fragment>
+        <Navbar />
+
+        <Stack direction="row">
+          <Sidebar setMode={setMode} mode={mode}/>
+          <Feed />
+          <Discover />
+        </Stack>
+      </React.Fragment>
+    </ThemeProvider>
   )
 }
 
